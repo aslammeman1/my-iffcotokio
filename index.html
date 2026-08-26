@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFFCO Tokio - Mobile App Portal</title>
+    <style>
+        :root {
+            --bg-deep: #050f09;
+            --accent-green: #00ff88;
+            --accent-cyan: #00e5ff;
+            --glass-bg: rgba(10, 30, 20, 0.6);
+            --card-bg: rgba(16, 45, 30, 0.7);
+            --card-hover: rgba(22, 65, 42, 0.9);
+            --text-main: #ffffff;
+            --text-muted: #b0bec5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            /* Stunning glowing multi-layer lighting effect */
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(0, 255, 136, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(0, 229, 255, 0.2) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(27, 94, 32, 0.3) 0%, transparent 60%);
+            background-size: cover;
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+        }
+
+        /* Floating background glowing light orbs */
+        .light-orb {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, rgba(0,255,136,0.15), rgba(0,229,255,0.05));
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            animation: floatOrb 10s ease-in-out infinite alternate;
+        }
+
+        .orb-1 { top: -50px; left: -50px; }
+        .orb-2 { bottom: -50px; right: -50px; animation-delay: -5s; }
+
+        @keyframes floatOrb {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(30px) scale(1.1); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+            width: 100%;
+            z-index: 1;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-container {
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 229, 255, 0.2));
+            backdrop-filter: blur(15px);
+            border-radius: 24px; /* Android app icon rounded square shape */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            margin-bottom: 20px;
+            border: 2px solid var(--accent-green);
+            transform: rotate(-3deg);
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        .logo-container span {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--accent-green), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+            background: linear-gradient(to right, #ffffff, #a8ffb2, #00e5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        /* Android App Card Grid Section */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
+            margin-bottom: 30px;
+        }
+
+        .app-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            padding: 22px;
+            border-radius: 20px; /* Material Design Card Radius */
+            color: #ffffff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Android-style touch ripple effect hint */
+        .app-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(0, 255, 136, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+
+        .app-card:hover::after {
+            animation: ripple 0.6s ease-out;
+        }
+
+        @keyframes ripple {
+            0% { transform: scale(0, 0); opacity: 0.5; }
+            100% { transform: scale(50, 50); opacity: 0; }
+        }
+
+        .app-card:hover {
+            background: var(--card-hover);
+            border-color: var(--accent-green);
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0, 255, 136, 0.25), 0 0 15px rgba(0, 229, 255, 0.15);
+        }
+
+        /* App Icon inside Card */
+        .app-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--accent-green);
+            flex-shrink: 0;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover .app-icon {
+            background: var(--accent-green);
+            color: #050f09;
+            box-shadow: 0 0 12px var(--accent-green);
+        }
+
+        .app-info {
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .app-title {
+            font-size: 1.02rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+
+        .app-category {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .app-arrow {
+            font-size: 1.1rem;
+            color: var(--accent-green);
+            transition: transform 0.3s ease;
+        }
+
+        .app-card:hover .app-arrow {
+            transform: translateX(4px);
+            color: var(--accent-cyan);
+        }
+
+        /* Footer Section */
+        footer {
+            background: rgba(5, 15, 9, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 22px;
+            text-align: center;
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .developer-title {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .developer-title span {
+            color: var(--accent-green);
+            font-weight: 600;
+            text-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
+        }
+
+        .developer-mail a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .developer-mail a:hover {
+            color: var(--accent-green);
+            text-decoration: underline;
+        }
+
+        .stylish-logo {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 1.15rem;
+            letter-spacing: 3px;
+            color: var(--accent-green);
+            margin-top: 4px;
+            text-shadow: 0 0 12px rgba(0, 255, 136, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.7rem;
+            }
+            .container {
+                padding: 20px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Lighting Orbs -->
+    <div class="light-orb orb-1"></div>
+    <div class="light-orb orb-2"></div>
+
+    <div class="container">
+        <!-- Header & App Logo -->
+        <div class="header">
+            <div class="logo-container">
+                <span>ITGI</span>
+            </div>
+            <h1>IFFCO Tokio General Insurance</h1>
+            <p class="subtitle">Secure Employee & Partner Application Dashboard</p>
+        </div>
+
+        <!-- Android App Card Grid -->
+        <div class="button-grid">
+            <a href="https://partner.iffcotokio.co.in/#/employee" target="_blank" class="app-card">
+                <div class="app-icon">💼</div>
+                <div class="app-info">
+                    <div class="app-title">CRM Portal</div>
+                    <div class="app-category">Employee Access</div>
+                </div>
+                <div class="app-arrow">&rsaquo;</div>
+            </a>
+
+            <a href="https://webapps.iffcotokio.co.in/CRT/login.do" target="_blank" class="app-card">
+                <div class="app-icon">📥</div>
+                <div class="app-info">
+                    <div class="app-title">CRT (Policy Download)</div>
+                    <div class="app-category">Policy & Document Download</div>
+                </div>
+                <div class="app-arrow">&rsaquo;</div>
+            </a>
+
+            <a href="https://mediclaims.iffcotokio.co.in/prweb/PRServlet/app/default/wyMqhP6FMi-sA5k-0rMbLgasSNSFdC4q*/!STANDARD" target="_blank" class="app-card">
+                <div class="app-icon">🏥</div>
+                <div class="app-info">
+                    <div class="app-title">PEGA Portal</div>
+                    <div class="app-category">Health & Fire insurance</div>
+                </div>
+                <div class="app-arrow">&rsaquo;</div>
+            </a>
+
+            <a href="https://webapps.iffcotokio.co.in/AgentOnboarding/#/" target="_blank" class="app-card">
+                <div class="app-icon">🤝</div>
+                <div class="app-info">
+                    <div class="app-title">Agent Onboarding System</div>
+                    <div class="app-category">Agent code Creation</div>
+                </div>
+                <div class="app-arrow">&rsaquo;</div>
+            </a>
+
+            <a href="https://suprabhat.itgi.co.in/my-tracker/user-dashboard" target="_blank" class="app-card">
+                <div class="app-icon">📊</div>
+                <div class="app-info">
+                    <div class="app-title">Tracker (Non-motor)</div>
+                    <div class="app-category">Approval Dashboard</div>
+                </div>
+                <div class="app-arrow">&rsaquo;</div>
+            </a>
+
+            <a href="https://sahaj.iffcotokio.co.in/login_page.php" target="_blank" class="app-card">
+                <div class="app-icon">⚡</div>
+                <div class="app-info">
+                    <div class="app-title">SAHAJ Request</div>
+                    <div class="app-category">Quick Query resolve</div>
+                </div>
+                <div class="app-arrow">&rsaquo;</div>
+            </a>
+
+            <a href="https://cps.iffcotokio.co.in/home/" target="_blank" class="app-card">
+                <div class="app-icon">💳</div>
+                <div class="app-info">
+                    <div class="app-title">CPS</div>
+                    <div class="app-category">Payment settlement</div>
+                </div>
+                <div class="app-arrow">&rsaquo;</div>
+            </a>
+
+            <a href="https://online.iffcotokio.co.in/itgicscportal/csc.do" target="_blank" class="app-card">
+                <div class="app-icon">🌐</div>
+                <div class="app-info">
+                    <div class="app-title">CSC (IFFCO Tokio)</div>
+                    <div class="app-category">Policy issuance</div>
+                </div>
+                <div class="app-arrow">&rsaquo;</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="developer-title">Developed by: <span>Aslam Meman</span></div>
+            <div class="developer-mail">
+                Mail ID: <a href="mailto:aslam.meman@iffcotokio.co.in">aslam.meman@iffcotokio.co.in</a>
+            </div>
+            <div class="stylish-logo">MUSKURATE RAHO</div>
+        </div>
+    </footer>
+
+</body>
+</html>
